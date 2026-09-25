@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>纸本文物水渍分布复原</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>纸本文物水渍分布复原</h1>
+    <p>
+      依据透射成像得到的行、列潮湿纤维计数，复原被污渍遮蔽的水渍分布。
+      潮湿单元按共享边的四邻接关系聚为水渍团，斜角接触不算连通。
+    </p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>网格设置</h2>
+      <div class="controls">
+        <label>行数
+          <select id="rows">
+            <option>4</option><option>5</option><option>6</option>
+            <option>7</option><option>8</option>
+          </select>
+        </label>
+        <label>列数
+          <select id="cols">
+            <option>4</option><option>5</option><option>6</option>
+            <option>7</option><option>8</option>
+          </select>
+        </label>
+        <label>水渍团数
+          <select id="components">
+            <option>1</option><option>2</option><option>3</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>计数与标注</h2>
+      <p class="hint">
+        在首行、首列填写透射成像得到的非负精确计数；点击单元格在
+        「待定 → 已确认潮湿 → 已确认干燥」之间循环切换（确认单元在复原中不得改变）。
+      </p>
+      <div id="grid-editor" class="editor-wrap"></div>
+      <ul class="legend">
+        <li><span class="swatch unknown"></span>待定</li>
+        <li><span class="swatch wet"></span>已确认潮湿</li>
+        <li><span class="swatch dry"></span>已确认干燥</li>
+      </ul>
+      <p id="balance-hint" class="balance"></p>
+      <div class="actions">
+        <button id="solve-btn" class="primary" type="button">复原</button>
+        <button id="reset-cells-btn" type="button">清除标注</button>
+        <button id="reset-counts-btn" type="button">清零计数</button>
+      </div>
+    </section>
+
+    <div id="error-panel" class="error" hidden></div>
+
+    <section class="panel" id="result-panel" hidden>
+      <h2>复原结论</h2>
+      <div id="verdict"></div>
+      <div id="solutions"></div>
+      <p id="result-meta" class="meta"></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    所有枚举计算均在本机完成，不依赖外部服务；草稿与最近结论保存在本机浏览器中。
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

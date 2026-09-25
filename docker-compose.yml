@@ -1,0 +1,33 @@
+name: stain-restorer
+
+services:
+  web:
+    build: .
+    image: stain-restorer:latest
+    environment:
+      PORT: "8080"
+    ports:
+      # 宿主机端口可通过 WEB_PORT 环境变量配置，默认 8080
+      - "${WEB_PORT:-8080}:8080"
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:'+(process.env.PORT||8080)+'/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+
+  # 一次性验证服务：自动执行代码测试、构建与领域求解冒烟，
+  # 以退出码报告结果后自行退出。
+  #   docker compose run --rm verify
+  #   docker compose up --build --exit-code-from verify verify
+  verify:
+    build: .
+    image: stain-restorer:latest
+    profiles: ["verify"]
+    command: ["npm", "run", "verify"]
+    restart: "no"

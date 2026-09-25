@@ -1,0 +1,17 @@
+{
+  "name": "stain-restorer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "纸本文物水渍分布复原：按行列潮湿计数与四邻接连通团约束在本机枚举求解",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test",
+    "build": "node scripts/build.js",
+    "smoke": "node scripts/smoke.js",
+    "verify": "npm test && npm run build && npm run smoke"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
