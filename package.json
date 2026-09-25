@@ -1,0 +1,17 @@
+{
+  "name": "stain-restore",
+  "version": "1.0.0",
+  "private": true,
+  "description": "纸本文物水渍分布复原：按行列潮湿计数与确认单元枚举全部可能网格",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/solver.test.js",
+    "build": "node scripts/build.js",
+    "smoke": "node scripts/smoke.js",
+    "verify": "npm run test && npm run build && npm run smoke"
+  }
+}

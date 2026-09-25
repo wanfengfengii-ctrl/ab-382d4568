@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>纸本文物水渍分布复原</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>纸本文物水渍分布复原</h1>
+    <p class="subtitle">
+      依据透射成像得到的行、列潮湿纤维计数，在本机联合枚举所有可能网格，
+      复原被污渍遮蔽的水渍分布——避免凭局部深色区域误判独立水渍团。
+    </p>
+  </header>
+
+  <main>
+    <section class="panel" aria-labelledby="draft-title">
+      <h2 id="draft-title">一、草稿：纸张网格与计数</h2>
+
+      <div class="controls">
+        <label>行数
+          <select id="rows"></select>
+        </label>
+        <label>列数
+          <select id="cols"></select>
+        </label>
+        <label>水渍团数
+          <select id="components"></select>
+        </label>
+        <button id="new-grid" type="button">新建网格</button>
+        <button id="clear-marks" type="button" class="secondary">全部标为待定</button>
+      </div>
+
+      <p class="hint">
+        点击单元在 <span class="tag unknown">待定</span> →
+        <span class="tag wet">已确认潮湿</span> →
+        <span class="tag dry">已确认干燥</span> 之间切换；
+        在每行右侧、每列底部填写非负精确计数。
+      </p>
+
+      <div id="grid-wrap" class="grid-wrap"><!-- 网格由 JS 渲染 --></div>
+
+      <div class="actions">
+        <button id="solve" type="button" class="primary">复原</button>
+        <span id="save-status" class="save-status" role="status"></span>
+      </div>
+      <p id="draft-error" class="error" role="alert"></p>
+    </section>
+
+    <section class="panel" aria-labelledby="result-title">
+      <h2 id="result-title">二、复原结论</h2>
+      <div id="result">
+        <p class="placeholder">尚无结论。请完善草稿后点击「复原」。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      规则：每行、每列潮湿数与所填计数精确相等；已确认单元不得改变；
+      全部潮湿单元按共享边四邻接（斜角不连通）恰形成指定数量的水渍团。
+      歧义时展示「按行优先二进制序最小的方案」（行优先展开、潮湿为 1 干燥为 0、
+      首单元为最高位的二进制数最小者）及一份确有不同的替代方案。
+      草稿与最近结论自动保存在本机。
+    </p>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
